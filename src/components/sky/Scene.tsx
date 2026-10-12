@@ -50,7 +50,7 @@ function StarField({ count }: { count: number }) {
   );
 }
 
-function Label({ pos, text, color, sub, size = "sm" }: { pos: THREE.Vector3; text: string; color?: string; sub?: string; size?: "sm" | "lg" }) {
+function Label({ pos, text, color, sub, size = "sm" }: { pos: THREE.Vector3; text: string; color?: string; sub?: string | undefined; size?: "sm" | "lg" }) {
   return (
     <Html position={pos} center zIndexRange={[10, 0]} style={{ pointerEvents: "none" }}>
       <div className={`sky-label ${size === "lg" ? "sky-label-lg" : ""}`} style={{ color }}>

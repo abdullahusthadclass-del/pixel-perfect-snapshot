@@ -8,9 +8,9 @@ import {
 export interface LayerGeom {
   lines: THREE.Vector3[][];
   /** faint supporting reference circle for arc layers */
-  reference?: THREE.Vector3[];
-  label?: THREE.Vector3;
-  measure?: string;
+  reference?: THREE.Vector3[] | undefined;
+  label?: THREE.Vector3 | undefined;
+  measure?: string | undefined;
   note?: string;
 }
 
@@ -23,8 +23,8 @@ function splitByHorizon(pts: THREE.Vector3[], above: boolean) {
   }
   if (cur.length) out.push(cur);
   // merge wrap-around
-  if (out.length > 1 && pts[0].y >= 0 === above && pts[pts.length - 1].y >= 0 === above) {
-    const last = out.pop()!; out[0] = [...last, ...out[0]];
+  if (out.length > 1 && pts[0]!.y >= 0 === above && pts[pts.length - 1]!.y >= 0 === above) {
+    const last = out.pop()!; out[0] = [...last, ...out[0]!];
   }
   return out.filter((s) => s.length > 1);
 }
@@ -113,7 +113,7 @@ export function buildLayer(id: string, s: SkyState): LayerGeom {
       const circ = smallCircle(P, Math.sin(s.sunDec * DEG), 240);
       const above = id === "26_day_arc";
       const segs = splitByHorizon(circ, above);
-      const total = segs.reduce((a, g) => a + g.length - 1, 0);
+      const total = circ.slice(1).filter((p) => (p.y >= 0) === above).length;
       const deg = (total / 240) * 360;
       return { lines: segs, reference: circ, label: segs[0]?.[Math.floor(segs[0].length / 2)], measure: `${fmt(deg)} ≈ ${(deg / 15).toFixed(2)} h` };
     }

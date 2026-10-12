@@ -46,7 +46,7 @@ export function SkyApp() {
     if (!st.touring) return;
     let i = 0;
     const step = () => {
-      const l = LAYERS[i % LAYERS.length];
+      const l = LAYERS[i % LAYERS.length]!;
       const s = useSky.getState();
       s.solo(l.id);
       const g = buildLayer(l.id, computeSky(new Date(s.simTime), s.lat, s.lon));

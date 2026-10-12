@@ -24,7 +24,7 @@ interface State {
   autoOrbit: boolean; orbitSpeed: number;
   quality: Quality; lang: Lang; view: "outside" | "inside";
   sidebarOpen: boolean; touring: boolean;
-  camCmd: { kind: "reset" | "focus" | "view"; dir?: [number, number, number]; n: number } | null;
+  camCmd: { kind: "reset" | "focus" | "view"; dir?: [number, number, number] | undefined; n: number } | null;
   set: (p: Partial<State>) => void;
   toggleLayer: (id: string) => void;
   setMany: (ids: string[], v: boolean) => void;
