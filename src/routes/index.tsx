@@ -1,24 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SkyApp } from "@/components/sky/SkyApp";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  ssr: false,
+  head: () => ({
+    meta: [
+      { title: "Tashrihul Aflak 3D — Interactive Celestial Sphere" },
+      { name: "description", content: "Explore the 30 circles and arcs of تشريح الأفلاك on a live, astronomically accurate 3D celestial sphere." },
+      { property: "og:title", content: "Tashrihul Aflak 3D — Interactive Celestial Sphere" },
+      { property: "og:description", content: "Great circles, small circles and arcs of classical astronomy in interactive 3D, in Malayalam, Arabic and English." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: SkyApp,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
